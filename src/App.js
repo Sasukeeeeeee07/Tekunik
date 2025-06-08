@@ -6,6 +6,7 @@ import Services from './components/Services';
 import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
+import ContactPage from './components/ContactPage';
 import WebDevelopment from './components/serviceDetails/WebDevelopment';
 import DigitalMarketing from './components/serviceDetails/DigitalMarketing';
 import ContentWriting from './components/serviceDetails/ContentWriting';
@@ -29,6 +30,7 @@ function App() {
               <Contact />
             </main>
           } />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/services/web-development" element={<WebDevelopment />} />
           <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
           <Route path="/services/content-writing" element={<ContentWriting />} />
