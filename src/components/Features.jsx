@@ -1,11 +1,12 @@
 import React from 'react';
+import AnimatedCounter from './AnimatedCounter';
 
 const Features = () => {
   const stats = [
-    { number: "500+", label: "Projects Completed" },
-    { number: "98%", label: "Client Satisfaction" },
-    { number: "50+", label: "Expert Team Members" },
-    { number: "10+", label: "Years Experience" }
+    { number: 500, suffix: '+', label: 'Projects Completed' },
+    { number: 98, suffix: '%', label: 'Client Satisfaction' },
+    { number: 50, suffix: '+', label: 'Expert Team Members' },
+    { number: 10, suffix: '+', label: 'Years Experience' }
   ];
 
   return (
@@ -63,7 +64,7 @@ const Features = () => {
           {stats.map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-4xl font-bold text-[#00A650] mb-2">
-                {stat.number}
+                <AnimatedCounter end={stat.number} suffix={stat.suffix} />
               </div>
               <div className="text-gray-600">{stat.label}</div>
             </div>

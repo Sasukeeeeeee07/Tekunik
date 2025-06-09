@@ -15,6 +15,8 @@ import ContentWriting from './components/serviceDetails/ContentWriting';
 import BrandBuilding from './components/serviceDetails/BrandBuilding';
 import WebsiteQuoteForm from './components/forms/WebsiteQuoteForm';
 import MobileAppQuoteForm from './components/forms/MobileAppQuoteForm';
+import Extras from './components/Extras';
+import NotFound from './components/NotFound';
 import './App.css';
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
               <Hero />
               <Services />
               <Features />
+              <Extras />
               <Testimonials />
               <Contact />
             </main>
@@ -41,6 +44,7 @@ function App() {
           <Route path="/services/brand-building" element={<BrandBuilding />} />
           <Route path="/request-quote/website" element={<WebsiteQuoteForm />} />
           <Route path="/request-quote/mobile-app" element={<MobileAppQuoteForm />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <footer className="bg-gray-900 text-white py-8">
           <div className="container mx-auto px-4 text-center">

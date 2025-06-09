@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import EnquiryForm from './EnquiryForm';
 
 const ServiceCard = ({ icon, title, description, features, path }) => {
   const navigate = useNavigate();
@@ -55,6 +56,8 @@ const ServiceCard = ({ icon, title, description, features, path }) => {
 };
 
 const Services = () => {
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  
   const services = [
     {
       icon: "💻",
@@ -107,38 +110,49 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50" id="services">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="inline-block">
-            <div className="flex items-center justify-center">
-              <div className="h-1 w-12 bg-[#00A650]"></div>
-              <span className="mx-4 text-[#00A650] font-semibold">OUR SERVICES</span>
-              <div className="h-1 w-12 bg-[#00A650]"></div>
+    <>
+      <section className="py-20 bg-gray-50" id="services">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-block">
+              <div className="flex items-center justify-center">
+                <div className="h-1 w-12 bg-[#00A650]"></div>
+                <span className="mx-4 text-[#00A650] font-semibold">OUR SERVICES</span>
+                <div className="h-1 w-12 bg-[#00A650]"></div>
+              </div>
             </div>
+            <h2 className="text-4xl font-bold text-gray-800 mt-4 mb-6">
+              Transforming Ideas into Digital Success
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              We offer comprehensive digital solutions tailored to your business needs, helping you achieve your goals and stand out in the digital landscape.
+            </p>
           </div>
-          <h2 className="text-4xl font-bold text-gray-800 mt-4 mb-6">
-            Transforming Ideas into Digital Success
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            We offer comprehensive digital solutions tailored to your business needs, helping you achieve your goals and stand out in the digital landscape.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {services.map((service, index) => (
-            <ServiceCard key={index} {...service} />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {services.map((service, index) => (
+              <ServiceCard key={index} {...service} />
+            ))}
+          </div>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <button className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105">
-            Discuss Your Project
-          </button>
+          {/* CTA Section */}
+          <div className="mt-16 text-center">
+            <button
+              onClick={() => setIsEnquiryOpen(true)}
+              className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
+            >
+              Discuss Your Project
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Enquiry Form Modal */}
+      <EnquiryForm 
+        isOpen={isEnquiryOpen} 
+        onClose={() => setIsEnquiryOpen(false)} 
+      />
+    </>
   );
 };
 
