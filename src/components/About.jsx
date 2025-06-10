@@ -52,9 +52,11 @@ const About = () => {
       <div className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80" 
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" 
             alt="Team collaboration" 
             className="w-full h-full object-cover"
+            loading="eager"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
@@ -102,11 +104,12 @@ const About = () => {
                 </div>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative aspect-w-16 aspect-h-9 min-h-[400px]">
               <img 
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
                 alt="Team meeting"
-                className="rounded-xl shadow-xl"
+                className="w-full h-full object-cover rounded-xl shadow-xl"
+                loading="lazy"
               />
               <div className="absolute -bottom-6 -right-6 bg-[#2B3990] text-white p-6 rounded-xl shadow-lg">
                 <p className="text-xl font-semibold">10+ Years</p>
@@ -247,61 +250,49 @@ const About = () => {
                       required
                       className="w-full px-4 py-2 rounded-lg bg-white text-gray-800"
                     />
-                    <p className="text-sm mt-1">Upload your resume (PDF, DOC, DOCX)</p>
+                    <p className="text-sm mt-1 text-white/80">Upload your resume (PDF, DOC, DOCX)</p>
                   </div>
                   <div>
                     <textarea
                       name="coverLetter"
                       value={formData.coverLetter}
                       onChange={handleInputChange}
-                      placeholder="Cover Letter"
-                      rows="4"
+                      placeholder="Cover Letter (Optional)"
+                      rows={4}
                       className="w-full px-4 py-2 rounded-lg text-gray-800"
-                    ></textarea>
+                    />
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex justify-between items-center">
+                    <button
+                      type="button"
+                      onClick={() => setShowJobForm(false)}
+                      className="text-white hover:underline"
+                    >
+                      Cancel
+                    </button>
                     <button
                       type="submit"
                       className="bg-white text-[#2B3990] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors"
                     >
                       Submit Application
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowJobForm(false)}
-                      className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors"
-                    >
-                      Cancel
-                    </button>
                   </div>
                 </form>
               )}
             </motion.div>
-            
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gray-50 p-8 rounded-xl"
+              className="relative aspect-w-16 aspect-h-9 min-h-[400px] rounded-xl overflow-hidden"
             >
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">Our Culture</h3>
-              <div className="space-y-6">
-                {[
-                  { icon: "🤝", title: "Collaborative Environment", desc: "Work together, grow together" },
-                  { icon: "🚀", title: "Growth Opportunities", desc: "Continuous learning and development" },
-                  { icon: "⚖️", title: "Work-Life Balance", desc: "Flexible and supportive workplace" },
-                  { icon: "💫", title: "Innovation-Driven", desc: "Embrace new ideas and technologies" }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="text-2xl">{item.icon}</div>
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
-                      <p className="text-gray-600">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1522071901873-411886a10004?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+                alt="Our team culture"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </motion.div>
           </div>
         </section>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useEnquiry } from '../context/EnquiryContext';
 
 const Services = () => {
@@ -56,53 +57,170 @@ const Services = () => {
     }
   ];
 
-  return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.
-          </p>
-        </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const iconVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const featureVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  return (
+    <motion.section 
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={containerVariants}
+      className="py-20 bg-gray-50"
+    >
+      <div className="container mx-auto px-4">
+        <motion.div 
+          variants={itemVariants}
+          className="text-center mb-12 md:mb-20"
+        >
+          <motion.h2 
+            variants={itemVariants}
+            className="text-4xl font-bold text-gray-800 mb-4"
+          >
+            Our Services
+          </motion.h2>
+          <motion.p 
+            variants={itemVariants}
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+          >
+            We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.
+          </motion.p>
+        </motion.div>
+
+        <motion.div 
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
+        >
           {services.map((service, index) => (
-            <Link
+            <motion.div
               key={index}
-              to={service.path}
-              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              variants={itemVariants}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.2 }
+              }}
             >
-              <div className="flex items-start gap-4">
-                <span className="text-4xl">{service.icon}</span>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{service.title}</h3>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-gray-600">
-                        <svg className="w-5 h-5 text-[#00A650] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+              <Link
+                to={service.path}
+                className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 block h-full"
+              >
+                <div className="flex items-start gap-4">
+                  <motion.span 
+                    variants={iconVariants}
+                    className="text-4xl"
+                    whileHover={{ 
+                      scale: 1.2,
+                      transition: { duration: 0.2 }
+                    }}
+                  >
+                    {service.icon}
+                  </motion.span>
+                  <div>
+                    <motion.h3 
+                      variants={itemVariants}
+                      className="text-2xl font-bold text-gray-800 mb-2"
+                    >
+                      {service.title}
+                    </motion.h3>
+                    <motion.p 
+                      variants={itemVariants}
+                      className="text-gray-600 mb-4"
+                    >
+                      {service.description}
+                    </motion.p>
+                    <motion.ul 
+                      variants={containerVariants}
+                      className="space-y-2"
+                    >
+                      {service.features.map((feature, idx) => (
+                        <motion.li 
+                          key={idx}
+                          variants={featureVariants}
+                          className="flex items-center text-gray-600"
+                        >
+                          <motion.svg 
+                            variants={iconVariants}
+                            className="w-5 h-5 text-[#00A650] mr-2" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                          </motion.svg>
+                          {feature}
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00A650]/5 to-[#2B3990]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Link>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  className="absolute inset-0 bg-gradient-to-r from-[#00A650]/5 to-[#2B3990]/5 rounded-2xl transition-opacity duration-300" 
+                />
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* CTA Section */}
-        <div className="text-center mt-12 md:mt-16">
-          <button
+        <motion.div 
+          variants={itemVariants}
+          className="text-center mt-12 md:mt-16"
+        >
+          <motion.button
             onClick={openMainEnquiry}
-            className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-[#00A650] text-white rounded-full text-base md:text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-[#00A650] text-white rounded-full text-base md:text-lg font-semibold hover:bg-[#008c43] transition-all duration-300"
           >
             Start Your Project
-            <svg
+            <motion.svg
+              initial={{ x: 0 }}
+              whileHover={{ x: 5 }}
               className="w-4 h-4 md:w-5 md:h-5 ml-2"
               fill="none"
               stroke="currentColor"
@@ -114,11 +232,11 @@ const Services = () => {
                 strokeWidth="2"
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
-            </svg>
-          </button>
-        </div>
+            </motion.svg>
+          </motion.button>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
