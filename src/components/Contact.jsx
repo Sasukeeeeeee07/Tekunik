@@ -2,7 +2,7 @@ import React from 'react';
 import { useEnquiry } from '../context/EnquiryContext';
 
 const Contact = () => {
-  const { openEnquiry } = useEnquiry();
+  const { openMainEnquiry } = useEnquiry();
 
   return (
     <section className="py-20 bg-gray-50">
@@ -15,7 +15,7 @@ const Contact = () => {
             Let's discuss how we can help your business grow with our innovative digital solutions.
           </p>
           <button
-            onClick={() => openEnquiry()}
+            onClick={openMainEnquiry}
             className="px-8 py-4 bg-[#00A650] text-white rounded-lg text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
           >
             Discuss Your Project

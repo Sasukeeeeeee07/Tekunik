@@ -20,6 +20,7 @@ import NotFound from './components/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import { EnquiryProvider } from './context/EnquiryContext';
 import EnquiryForm from './components/EnquiryForm';
+import MainEnquiryForm from './components/MainEnquiryForm';
 import './App.css';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
             </div>
           </footer>
           <EnquiryForm />
+          <MainEnquiryForm />
         </div>
       </EnquiryProvider>
     </Router>

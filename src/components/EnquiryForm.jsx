@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useEnquiry } from '../context/EnquiryContext';
 
 const EnquiryForm = () => {
@@ -12,6 +12,16 @@ const EnquiryForm = () => {
     service: ''
   });
 
+  // Update form when selectedService changes
+  useEffect(() => {
+    if (selectedService) {
+      setFormData(prev => ({
+        ...prev,
+        service: selectedService
+      }));
+    }
+  }, [selectedService]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -23,7 +33,7 @@ const EnquiryForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here you would typically send the data to your backend
-    console.log('Form submitted:', { ...formData, service: selectedService });
+    console.log('Form submitted:', formData);
     // Reset form
     setFormData({
       name: '',
@@ -125,6 +135,26 @@ const EnquiryForm = () => {
                   placeholder="Your Company"
                 />
               </div>
+            </div>
+
+            <div>
+              <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
+                Service *
+              </label>
+              <select
+                id="service"
+                name="service"
+                required
+                value={formData.service}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all"
+              >
+                <option value="">Select a Service</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="Content Writing">Content Writing</option>
+                <option value="Brand Building">Brand Building</option>
+              </select>
             </div>
 
             <div>
