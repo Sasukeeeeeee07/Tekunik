@@ -1,6 +1,9 @@
 import React from 'react';
+import { useEnquiry } from '../../context/EnquiryContext';
 
 const WebDevelopment = () => {
+  const { openEnquiry } = useEnquiry();
+  
   const technologies = [
     { name: 'React', icon: '⚛️' },
     { name: 'Node.js', icon: '🟢' },
@@ -123,7 +126,10 @@ const WebDevelopment = () => {
             <p className="text-lg text-gray-200 mb-8">
               Let's discuss how we can help bring your vision to life.
             </p>
-            <button className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105">
+            <button 
+              onClick={() => openEnquiry('Web Development')}
+              className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
+            >
               Get Free Consultation
             </button>
           </div>

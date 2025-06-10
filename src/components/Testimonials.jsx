@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import styles from './Testimonials.module.css';
 
 const Testimonials = () => {
   const testimonials = [
@@ -22,18 +26,25 @@ const Testimonials = () => {
     }
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const next = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prev = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
   };
 
   return (
@@ -48,54 +59,41 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto relative">
-          {/* Testimonial Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              <img
-                src={testimonials[currentIndex].image}
-                alt={testimonials[currentIndex].name}
-                className="w-20 h-20 rounded-full object-cover"
-              />
-              <div>
-                <div className="text-[#00A650] mb-4">
-                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 32 32">
-                    <path d="M10 8c-2.2 0-4 1.8-4 4v12h8V12h-6c0-3.2 2.8-6 6-6V8zm12 0c-2.2 0-4 1.8-4 4v12h8V12h-6c0-3.2 2.8-6 6-6V8z"/>
-                  </svg>
+        <div className="max-w-4xl mx-auto">
+          <div className={styles.testimonialSlider}>
+            <Slider {...settings}>
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="px-4">
+                  <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="w-20 h-20 rounded-full object-cover"
+                      />
+                      <div>
+                        <div className="text-[#00A650] mb-4">
+                          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M10 8c-2.2 0-4 1.8-4 4v12h8V12h-6c0-3.2 2.8-6 6-6V8zm12 0c-2.2 0-4 1.8-4 4v12h8V12h-6c0-3.2 2.8-6 6-6V8z"/>
+                          </svg>
+                        </div>
+                        <p className="text-gray-600 text-lg mb-6 italic">
+                          {testimonial.content}
+                        </p>
+                        <div>
+                          <h4 className="text-xl font-semibold text-gray-800">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-gray-600">
+                            {testimonial.role}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-lg mb-6 italic">
-                  {testimonials[currentIndex].content}
-                </p>
-                <div>
-                  <h4 className="text-xl font-semibold text-gray-800">
-                    {testimonials[currentIndex].name}
-                  </h4>
-                  <p className="text-gray-600">
-                    {testimonials[currentIndex].role}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-center mt-8 gap-4">
-            <button
-              onClick={prev}
-              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
-            >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={next}
-              className="p-2 rounded-full bg-white shadow-md hover:bg-gray-50 transition-colors"
-            >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+              ))}
+            </Slider>
           </div>
         </div>
       </div>

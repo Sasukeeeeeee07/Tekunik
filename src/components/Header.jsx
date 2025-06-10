@@ -4,9 +4,19 @@ import logo from './assets/Logo.jpeg';
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -26,7 +36,7 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Navigation */}
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
               <Link to="/" className="text-gray-700 hover:text-[#00A650] relative group">
                 <span className="relative">
@@ -53,7 +63,7 @@ const Header = () => {
                 </span>
               </Link>
               
-              {/* Request Quote Dropdown */}
+              {/* Desktop Request Quote Dropdown */}
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
@@ -72,7 +82,7 @@ const Header = () => {
                   </span>
                 </button>
 
-                {/* Dropdown Menu */}
+                {/* Desktop Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden transform origin-top transition-all duration-300">
                     <div className="py-1">
@@ -104,7 +114,10 @@ const Header = () => {
 
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <button className="text-gray-700 hover:text-[#00A650] transition-colors duration-300">
+              <button 
+                onClick={toggleMobileMenu}
+                className="text-gray-700 hover:text-[#00A650] transition-colors duration-300 p-2"
+              >
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -114,9 +127,91 @@ const Header = () => {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path d="M4 6h16M4 12h16M4 18h16"></path>
+                  {isMobileMenuOpen ? (
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  )}
                 </svg>
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <div 
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen 
+              ? 'max-h-screen opacity-100 visible' 
+              : 'max-h-0 opacity-0 invisible'
+          }`}
+        >
+          <div className="bg-white border-t border-gray-200 py-4">
+            <div className="container mx-auto px-4 space-y-3">
+              <Link 
+                to="/" 
+                className="block text-gray-700 hover:text-[#00A650] py-2"
+                onClick={closeMobileMenu}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/about" 
+                className="block text-gray-700 hover:text-[#00A650] py-2"
+                onClick={closeMobileMenu}
+              >
+                About
+              </Link>
+              <Link 
+                to="/services" 
+                className="block text-gray-700 hover:text-[#00A650] py-2"
+                onClick={closeMobileMenu}
+              >
+                Services
+              </Link>
+              <Link 
+                to="/contact" 
+                className="block text-gray-700 hover:text-[#00A650] py-2"
+                onClick={closeMobileMenu}
+              >
+                Contact
+              </Link>
+
+              {/* Mobile Request Quote Section */}
+              <div className="pt-3 border-t border-gray-100">
+                <button
+                  onClick={toggleDropdown}
+                  className="w-full flex items-center justify-between text-gray-700 hover:text-[#00A650] py-2"
+                >
+                  <span>Request Quote</span>
+                  <svg 
+                    className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Mobile Dropdown Menu */}
+                <div className={`pl-4 space-y-2 transition-all duration-300 ${isDropdownOpen ? 'block' : 'hidden'}`}>
+                  <Link
+                    to="/request-quote/website"
+                    className="block text-gray-600 hover:text-[#00A650] py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    Website Development
+                  </Link>
+                  <Link
+                    to="/request-quote/mobile-app"
+                    className="block text-gray-600 hover:text-[#00A650] py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    Mobile App Development
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

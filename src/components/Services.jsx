@@ -1,62 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import EnquiryForm from './EnquiryForm';
-
-const ServiceCard = ({ icon, title, description, features, path }) => {
-  const navigate = useNavigate();
-
-  return (
-    <div 
-      className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer"
-      onClick={() => navigate(path)}
-    >
-      <div className="text-[#00A650] mb-6 text-5xl">{icon}</div>
-      <h3 className="text-2xl font-bold mb-4 text-gray-800">{title}</h3>
-      <p className="text-gray-600 mb-6">{description}</p>
-      <ul className="space-y-3">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <svg
-              className="w-5 h-5 text-[#00A650] mt-1 mr-3 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-            <span className="text-gray-600">{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-6 flex justify-end">
-        <button className="text-[#00A650] font-semibold hover:text-[#008c43] transition-colors duration-300 flex items-center">
-          Learn More
-          <svg
-            className="w-5 h-5 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-};
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useEnquiry } from '../context/EnquiryContext';
 
 const Services = () => {
-  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  const { openEnquiry } = useEnquiry();
   
   const services = [
     {
@@ -110,49 +57,101 @@ const Services = () => {
   ];
 
   return (
-    <>
-      <section className="py-20 bg-gray-50" id="services">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-block">
-              <div className="flex items-center justify-center">
-                <div className="h-1 w-12 bg-[#00A650]"></div>
-                <span className="mx-4 text-[#00A650] font-semibold">OUR SERVICES</span>
-                <div className="h-1 w-12 bg-[#00A650]"></div>
-              </div>
-            </div>
-            <h2 className="text-4xl font-bold text-gray-800 mt-4 mb-6">
-              Transforming Ideas into Digital Success
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              We offer comprehensive digital solutions tailored to your business needs, helping you achieve your goals and stand out in the digital landscape.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <ServiceCard key={index} {...service} />
-            ))}
-          </div>
-
-          {/* CTA Section */}
-          <div className="mt-16 text-center">
-            <button
-              onClick={() => setIsEnquiryOpen(true)}
-              className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
-            >
-              Discuss Your Project
-            </button>
-          </div>
+    <section className="py-16 md:py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            Our Services
+          </h2>
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+            We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.
+          </p>
         </div>
-      </section>
 
-      {/* Enquiry Form Modal */}
-      <EnquiryForm 
-        isOpen={isEnquiryOpen} 
-        onClose={() => setIsEnquiryOpen(false)} 
-      />
-    </>
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+          {services.map((service, index) => (
+            <Link
+              key={index}
+              to={service.path}
+              className="group bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            >
+              {/* Service Icon */}
+              <div className="text-4xl mb-4">{service.icon}</div>
+              
+              {/* Service Title */}
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                {service.title}
+              </h3>
+              
+              {/* Service Description */}
+              <p className="text-gray-600 mb-6">
+                {service.description}
+              </p>
+              
+              {/* Service Features */}
+              <div className="space-y-3 mb-12">
+                {service.features.map((feature, idx) => (
+                  <div key={idx} className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-[#00A650] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {feature}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Learn More Link */}
+              <div className="absolute bottom-6 md:bottom-8 right-6 md:right-8">
+                <span className="text-[#00A650] font-semibold flex items-center group-hover:translate-x-1 transition-transform duration-300">
+                  Learn More
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+              </div>
+
+              {/* Hover Effect Background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00A650]/5 to-[#2B3990]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-12 md:mt-16">
+          <button
+            onClick={() => openEnquiry()}
+            className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-[#00A650] text-white rounded-full text-base md:text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
+          >
+            Start Your Project
+            <svg
+              className="w-4 h-4 md:w-5 md:h-5 ml-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
   );
 };
 

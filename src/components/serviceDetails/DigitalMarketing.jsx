@@ -1,6 +1,9 @@
 import React from 'react';
+import { useEnquiry } from '../../context/EnquiryContext';
 
 const DigitalMarketing = () => {
+  const { openEnquiry } = useEnquiry();
+
   const services = [
     {
       title: "Search Engine Optimization",
@@ -116,7 +119,10 @@ const DigitalMarketing = () => {
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Let's create a digital marketing strategy that helps you reach your business goals.
           </p>
-          <button className="bg-white text-[#2B3990] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={() => openEnquiry('Digital Marketing')}
+            className="bg-white text-[#2B3990] px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+          >
             Schedule a Strategy Call
           </button>
         </div>

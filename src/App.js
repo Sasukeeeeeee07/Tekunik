@@ -17,41 +17,48 @@ import WebsiteQuoteForm from './components/forms/WebsiteQuoteForm';
 import MobileAppQuoteForm from './components/forms/MobileAppQuoteForm';
 import Extras from './components/Extras';
 import NotFound from './components/NotFound';
+import ScrollToTop from './components/ScrollToTop';
+import { EnquiryProvider } from './context/EnquiryContext';
+import EnquiryForm from './components/EnquiryForm';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen">
-        <Header />
-        <Routes>
-          <Route path="/" element={
-            <main>
-              <Hero />
-              <Services />
-              <Features />
-              <Extras />
-              <Testimonials />
-              <Contact />
-            </main>
-          } />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/services/web-development" element={<WebDevelopment />} />
-          <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
-          <Route path="/services/content-writing" element={<ContentWriting />} />
-          <Route path="/services/brand-building" element={<BrandBuilding />} />
-          <Route path="/request-quote/website" element={<WebsiteQuoteForm />} />
-          <Route path="/request-quote/mobile-app" element={<MobileAppQuoteForm />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <footer className="bg-gray-900 text-white py-8">
-          <div className="container mx-auto px-4 text-center">
-            <p>&copy; {new Date().getFullYear()} Tekunik. All rights reserved.</p>
-          </div>
-        </footer>
-      </div>
+      <EnquiryProvider>
+        <ScrollToTop />
+        <div className="min-h-screen">
+          <Header />
+          <Routes>
+            <Route path="/" element={
+              <main>
+                <Hero />
+                <Services />
+                <Features />
+                <Extras />
+                <Testimonials />
+                <Contact />
+              </main>
+            } />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/services/web-development" element={<WebDevelopment />} />
+            <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+            <Route path="/services/content-writing" element={<ContentWriting />} />
+            <Route path="/services/brand-building" element={<BrandBuilding />} />
+            <Route path="/request-quote/website" element={<WebsiteQuoteForm />} />
+            <Route path="/request-quote/mobile-app" element={<MobileAppQuoteForm />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <footer className="bg-gray-900 text-white py-8">
+            <div className="container mx-auto px-4 text-center">
+              <p>&copy; {new Date().getFullYear()} Tekunik. All rights reserved.</p>
+            </div>
+          </footer>
+          <EnquiryForm />
+        </div>
+      </EnquiryProvider>
     </Router>
   );
 }

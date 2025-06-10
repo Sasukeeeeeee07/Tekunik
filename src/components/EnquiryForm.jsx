@@ -1,165 +1,157 @@
 import React, { useState } from 'react';
+import { useEnquiry } from '../context/EnquiryContext';
 
-const EnquiryForm = ({ isOpen, onClose }) => {
+const EnquiryForm = () => {
+  const { isEnquiryOpen, selectedService, closeEnquiry } = useEnquiry();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    mobile: '',
-    service: '',
-    budget: '',
-    companyName: '',
-    website: '',
-    requirement: ''
+    phone: '',
+    company: '',
+    message: '',
+    service: ''
   });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
-    onClose();
-  };
-
-  const handleChange = (e) => {
+    // Here you would typically send the data to your backend
+    console.log('Form submitted:', { ...formData, service: selectedService });
+    // Reset form
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      message: '',
+      service: ''
     });
+    closeEnquiry();
   };
 
-  if (!isOpen) return null;
+  if (!isEnquiryOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-4xl bg-white rounded-lg shadow-xl">
-        {/* Close button */}
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Close Button */}
+        <button
+          onClick={closeEnquiry}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row">
-          {/* Left side - Hero Image and Text */}
-          <div className="md:w-2/5 bg-gradient-to-br from-blue-600 to-blue-700 p-8 rounded-l-lg text-white">
-            <div className="h-full flex flex-col justify-center">
-              <h2 className="text-3xl font-bold mb-4">Let Us Know</h2>
-              <h3 className="text-4xl font-bold mb-6">Your Need</h3>
-              <p className="text-blue-100">
-                Fill out the form and our team will get back to you within 24 hours.
-              </p>
-            </div>
+        <div className="p-8">
+          {/* Form Header */}
+          <div className="text-center mb-8">
+            <div className="w-20 h-1 bg-gradient-to-r from-[#00A650] to-[#2B3990] mx-auto mb-4 rounded-full"></div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Get in Touch</h2>
+            {selectedService && (
+              <p className="text-gray-600">Enquiry for {selectedService}</p>
+            )}
           </div>
 
-          {/* Right side - Form */}
-          <div className="md:w-3/5 p-8">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Enquiry Form</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Enquiry Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name *
+                </label>
                 <input
                   type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  id="name"
+                  name="name"
                   required
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                  value={formData.lastName}
-                  onChange={handleChange}
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all"
+                  placeholder="John Doe"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address *
+                </label>
                 <input
                   type="email"
+                  id="email"
                   name="email"
-                  placeholder="Email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                   value={formData.email}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all"
+                  placeholder="john@example.com"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
-                  name="mobile"
-                  placeholder="Mobile"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                  value={formData.mobile}
-                  onChange={handleChange}
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all"
+                  placeholder="+1 (555) 000-0000"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select
-                  name="service"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                  value={formData.service}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Service</option>
-                  <option value="web-development">Web Development</option>
-                  <option value="digital-marketing">Digital Marketing</option>
-                  <option value="content-writing">Content Writing</option>
-                  <option value="brand-building">Brand Building</option>
-                </select>
+              <div>
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+                  Company Name
+                </label>
                 <input
                   type="text"
-                  name="budget"
-                  placeholder="Budget"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  value={formData.budget}
-                  onChange={handleChange}
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all"
+                  placeholder="Your Company"
                 />
               </div>
+            </div>
 
-              <input
-                type="text"
-                name="companyName"
-                placeholder="Company Name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={formData.companyName}
-                onChange={handleChange}
-              />
-
-              {/* <input
-                type="url"
-                name="website"
-                placeholder="Website"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={formData.website}
-                onChange={handleChange}
-              /> */}
-
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                Message *
+              </label>
               <textarea
-                name="requirement"
-                placeholder="Describe Your Requirement"
-                rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                id="message"
+                name="message"
                 required
-                value={formData.requirement}
-                onChange={handleChange}
+                value={formData.message}
+                onChange={handleInputChange}
+                rows={4}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00A650] focus:border-transparent transition-all resize-none"
+                placeholder="Tell us about your project..."
               ></textarea>
+            </div>
 
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                className="bg-gradient-to-r from-[#00A650] to-[#2B3990] text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity"
               >
-                Submit
+                Send Message
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

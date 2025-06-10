@@ -1,6 +1,9 @@
 import React from 'react';
+import { useEnquiry } from '../../context/EnquiryContext';
 
 const BrandBuilding = () => {
+  const { openEnquiry } = useEnquiry();
+
   const brandServices = [
     {
       title: "Brand Strategy",
@@ -154,7 +157,10 @@ const BrandBuilding = () => {
           <p className="text-gray-600 mb-8">
             Let's create a brand that resonates with your audience and drives business growth.
           </p>
-          <button className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={() => openEnquiry('Brand Building')}
+            className="bg-[#00A650] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#008c43] transition-all duration-300 transform hover:scale-105"
+          >
             Start Your Brand Journey
           </button>
         </div>
