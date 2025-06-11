@@ -4,7 +4,7 @@ import AnimatedCounter from './AnimatedCounter';
 import { useEnquiry } from '../context/EnquiryContext';
 
 const Hero = () => {
-  const { openMainEnquiry } = useEnquiry();
+  const { openMainEnquiry, openEnquiry } = useEnquiry();
   
   const stats = [
     { number: 500, suffix: '+', label: 'Projects Delivered' },
@@ -139,7 +139,7 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-[#2B3990] to-[#00A650] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.button>
             <motion.button 
-              onClick={openMainEnquiry}
+              onClick={() => openEnquiry('General')}
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
